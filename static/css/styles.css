@@ -1,0 +1,140 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Button Styles */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s ease-in-out;
+}
+
+#edit-btn {
+    background-color: #f39c12;
+    color: white;
+}
+
+#edit-btn:hover {
+    background-color: #e67e22;
+}
+
+#submit-btn {
+    background-color: #2ecc71;
+    color: white;
+}
+
+#submit-btn:hover {
+    background-color: #27ae60;
+}
+
+#submit-btn:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* Row Count */
+#row-count {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Table Styling */
+.table-container {
+    overflow-x: auto;
+    max-height: 500px;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Table Header & Filter Row */
+thead {
+    position: sticky;
+    top: 0;
+    background: #3498db;
+    z-index: 10;
+}
+
+th {
+    padding: 12px;
+    color: white;
+    background-color: #3498db;
+    text-transform: uppercase;
+}
+
+/* Table Body */
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    background: white;
+    transition: background-color 0.3s;
+}
+
+/* Editable Fields Highlight */
+td[contenteditable="true"] {
+    background-color: #fff7cc;
+    outline: none;
+}
+
+td[contenteditable="true"]:focus {
+    background-color: #ffeb99;
+}
+
+/* Alternate Row Colors */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #dfe6e9;
+}
+
+/* Filters */
+.filter-input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
