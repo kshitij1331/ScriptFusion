@@ -1,0 +1,6 @@
+EXCEL_NAME = ''
+SUBSHEET_NAME = ''
+DB_NAME = ''
+TABLE_NAME = ''
+JSON_FILE = 'output.json'
+DATA_DIR = 'data'

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Excel</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        h2 {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 16px;
+            transition: transform 0.2s ease-in-out;
+        }
+        .submit-btn {
+            background: #28a745;
+            color: white;
+        }
+        .submit-btn:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+        .proceed-btn {
+            background: #007bff;
+            color: white;
+        }
+        .proceed-btn:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+        .proceed-btn:disabled {
+            background: gray;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Upload Excel File</h2>
+
+        <form id="uploadForm" action="/upload/uploadfile" method="post" enctype="multipart/form-data">
+            <label for="file">Select Excel File:</label>
+            <input type="file" name="file" id="file" required>
+
+            <label for="subsheet_name">Subsheet Name:</label>
+            <input type="text" name="subsheet_name" id="subsheet_name" value="Sheet1">
+
+            <label for="db_name">Database Name:</label>
+            <input type="text" name="db_name" id="db_name" value="Benchmark.db">
+
+            <button type="submit" class="btn submit-btn">Submit</button>
+        </form>
+
+        <p id="message"></p>
+
+        <button class="btn script-run-btn" id="submitBtn">Run Script</button>
+
+        <button class="btn proceed-btn" id="proceedBtn" disabled>Proceed</button>
+    </div>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+            const message = document.getElementById("message");
+            const proceedBtn = document.getElementById("proceedBtn");
+
+            message.style.display = "none"; // Hide previous messages
+
+            fetch("/upload/uploadfile", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Upload failed");
+                }
+                return response.text();
+            })
+            .then(data => {
+                message.textContent = "✅ Success! File uploaded.";
+                message.style.color = "green";
+                message.style.background = "rgba(0, 200, 150, 0.2";
+                message.style.display = "block";
+                proceedBtn.disabled = false; // Enable Proceed button
+            })
+            .catch(error => {
+                message.textContent = "❌ Error: Upload failed.";
+                message.style.color = "red";
+                message.style.background = "rgba(255, 0, 0, 0.2)";
+                message.style.display = "block";
+            });
+        });
+
+        document.getElementById("proceedBtn").addEventListener("click", function() {
+            window.location.href = "/api";  // Redirect to /api on Proceed button click
+        });
+
+        document.getElementById("submitBtn").addEventListener("click", function() {
+            document.getElementById("message").textContent = "Running...";
+
+            fetch("/upload/run-script", { method: "POST" })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    document.getElementById("message").textContent = "✅ Success!";
+                    document.getElementById("message").style.color = "green";
+                } else {
+                    document.getElementById("message").textContent = "❌ Error: " + data.message;
+                    document.getElementById("message").style.color = "red";
+                }
+            })
+            .catch(error => {
+                document.getElementById("message").textContent = "❌ Error: " + error.message;
+                document.getElementById("message").style.color = "red";
+            });
+        });
+    </script>
+
+</body>
+</html>
