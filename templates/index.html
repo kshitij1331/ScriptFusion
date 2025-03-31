@@ -1,11 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptFusion | Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e1e2f, #3a3a62);
+            color: #fff;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            margin-top: 15px;
+            background: #ff7b00;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #ff5200;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to ScriptFUUUSION</h1>
-    <a href="/upload/">Go to uploadfile Page</a>
-    <!-- <a href="/group/">Go to Group Page</a> -->
+
+    <div class="container">
+        <h1>Welcome to <span style="color: #ff7b00;">ScriptFusion</span></h1>
+        <a href="/upload/" class="btn">Go to Upload File Page</a>
+    </div>
+
 </body>
 </html>
