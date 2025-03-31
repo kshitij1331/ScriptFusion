@@ -99,9 +99,24 @@ def control_list():
 def get_controls():
     """Returns all controls with error handling."""
     try:
-        return jsonify(controls)
-    except Exception as e:
-        return jsonify({"error": f"⚠️ Error retrieving controls: {str(e)}"}), 500
+        with sqlite3.connect(DB_PATH) as con:
+            cursor = con.cursor()
+            cursor.execute(f"SELECT * FROM {TABLE_NAME}")
+            rows = cursor.fetchall()  # Fetch all rows
+            
+            if not rows:
+                return jsonify([])  # Return empty list if no data
+            
+            # Fetch column names dynamically
+            columns = ["id"] + fetch_columns()
+
+            # Convert rows into a list of dictionaries
+            controls = [dict(zip(columns, row)) for row in rows]
+
+        return jsonify(controls)  # Return JSON response
+
+    except sqlite3.Error as e:
+        return jsonify({"error": f"⚠️ Database error: {str(e)}"}), 500
 
 
 @api_bp.route('/controls/<int:control_id>', methods=['GET'])
